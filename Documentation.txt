@@ -1,0 +1,43 @@
+Name: Ashutosh Jambhale
+References:
+1)Heap Sort: https://www.geeksforgeeks.org/heap-sort/, https://www.programiz.com/dsa/heap-sort
+2)Newline Handling: https://stackoverflow.com/questions/42769110/keep-new-lines-when-reading-in-a-file
+3)Temp Files: https://www.geeksforgeeks.org/create-a-temporary-file-in-java/
+4)Tape Sorting: https://www.geeksforgeeks.org/sorting-with-tapes-balanced-merge/
+
+Methods:
+main: Entry point that parses arguments, creates initial sorted runs from input, optionally merges them, outputs the result to stdout, and cleans up temporary files.
+
+parseRunSize: Converts the run size argument to an integer and ensures it’s between 64 and 1024, exiting with an error if invalid.
+
+createInitialRuns: Reads lines from stdin into chunks of runSize, sorts each chunk with heap sort, writes them to temporary files, and returns a list of these files.
+
+writeToFile: Writes a sorted list of strings to a temporary file, adding newlines, and logs the operation to stderr.
+
+heapSort: Sorts a list of strings in-place using heap sort by building a max-heap and repeatedly extracting the maximum element.
+
+heapify: Maintains the heap property by ensuring the largest value among a node and its children is at the node, swapping and recursing as needed.
+
+merge: Combines two sorted files into a single sorted temporary file by comparing lines and writing the smaller one, handling cases where one file runs out.
+
+balancedMergeSort: Iteratively merges pairs of run files using a balanced 2-way merge until one sorted file remains, returning it.
+
+createNullTape: Creates an empty temporary file for pairing in merges when the number of runs is odd, tracking it for cleanup.
+
+outputToStdout: Reads a file line-by-line and prints it to stdout for the final sorted output.
+
+createTempFile: Generates a writable temporary file with a given prefix in the current directory, logging its creation.
+
+cleanAllTempFiles: Deletes all tracked temporary files after sorting, logging each deletion’s success or failure.
+
+Example of how this code works:
+Command: cat MobyDick.txt | java XSort 64 2 > Moby.sorted
+
+Input: Reads lines from MobyDick.txt via stdin.
+Runs: Creates sorted runs of 64 lines each (e.g., run0-.tmp, run1-.tmp, ...), using heap sort.
+Merge: If 4 runs are created:
+Merges run0 and run1 -> merge-0.tmp.
+Merges run2 and run3 -> merge-1.tmp.
+Merges merge-0 and merge-1 -> final file.
+Output: Writes the final file to Moby.sorted.
+Cleanup: Deletes all .tmp files.
